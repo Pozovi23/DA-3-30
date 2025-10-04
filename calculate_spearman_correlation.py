@@ -6,12 +6,22 @@ def calculate_spearman_correlation(x: np.ndarray, y: np.ndarray) -> float:
     """
     Calculate Spearman correlation between two variables.
 
-    Args:
-        x: First feature array
-        y: Second feature array
+    Parameters
+    ----------
+    x : np.ndarray
+        First feature array
+    y : np.ndarray
+        Second feature array
 
-    Returns:
-        float: Spearman correlation coefficient
+    Returns
+    -------
+    float
+        Spearman correlation coefficient
+
+    Raises
+    ------
+    ValueError
+        If input arrays have different lengths or are empty
     """
     try:
         if len(x) != len(y) or len(x) == 0:

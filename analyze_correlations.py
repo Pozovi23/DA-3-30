@@ -13,18 +13,30 @@ def load_dataset(
     n_samples: int = 100,
     noise: float = 5.0,
     random_state: int = 42,
-) -> tuple:
+) -> tuple[np.ndarray, np.ndarray]:
     """
     Load dataset (synthetic with nonlinear relationship or Iris).
 
-    Args:
-        dataset_type: Type of dataset ("synthetic" or "iris")
-        n_samples: Number of samples for synthetic dataset
-        noise: Amount of noise for synthetic dataset
-        random_state: Random seed for reproducibility
+    Parameters
+    ----------
+    dataset_type : str, optional
+        Type of dataset ("synthetic" or "iris"), by default "synthetic"
+    n_samples : int, optional
+        Number of samples for synthetic dataset, by default 100
+    noise : float, optional
+        Amount of noise for synthetic dataset, by default 5.0
+    random_state : int, optional
+        Random seed for reproducibility, by default 42
 
-    Returns:
-        tuple: Features (X) and target (y)
+    Returns
+    -------
+    tuple[np.ndarray, np.ndarray]
+        Features (X) and target (y) as numpy arrays
+
+    Raises
+    ------
+    ValueError
+        If dataset_type is not "synthetic" or "iris"
     """
     try:
         if dataset_type == "synthetic":
@@ -67,12 +79,22 @@ def calculate_pearson_correlation(x: np.ndarray, y: np.ndarray) -> float:
     """
     Calculate Pearson correlation between two variables.
 
-    Args:
-        x: First feature array
-        y: Second feature array
+    Parameters
+    ----------
+    x : np.ndarray
+        First feature array
+    y : np.ndarray
+        Second feature array
 
-    Returns:
-        float: Pearson correlation coefficient
+    Returns
+    -------
+    float
+        Pearson correlation coefficient
+
+    Raises
+    ------
+    ValueError
+        If input arrays have different lengths or are empty
     """
     try:
         if len(x) != len(y) or len(x) == 0:
@@ -90,12 +112,22 @@ def analyze_correlation_difference(spearman_corr: float, pearson_corr: float) ->
     """
     Analyze difference between Spearman and Pearson correlations.
 
-    Args:
-        spearman_corr: Spearman correlation coefficient
-        pearson_corr: Pearson correlation coefficient
+    Parameters
+    ----------
+    spearman_corr : float
+        Spearman correlation coefficient
+    pearson_corr : float
+        Pearson correlation coefficient
 
-    Returns:
-        str: Explanation of the difference
+    Returns
+    -------
+    str
+        Explanation of the difference between correlations
+
+    Raises
+    ------
+    ValueError
+        If correlation coefficients are NaN
     """
     try:
         if np.isnan(spearman_corr) or np.isnan(pearson_corr):
@@ -118,13 +150,18 @@ def visualize_data(
     x: np.ndarray, y: np.ndarray, dataset_type: str = "synthetic", save_path: str = None
 ) -> None:
     """
-    Create a scatter plot of the relationship between two variables and save it if a path is provided.
+    Create a scatter plot of the relationship between two variables.
 
-    Args:
-        x: First feature array
-        y: Second feature array
-        dataset_type: Type of dataset ("synthetic" or "iris")
-        save_path: Path to save the plot (optional)
+    Parameters
+    ----------
+    x : np.ndarray
+        First feature array
+    y : np.ndarray
+        Second feature array
+    dataset_type : str, optional
+        Type of dataset ("synthetic" or "iris"), by default "synthetic"
+    save_path : str, optional
+        Path to save the plot, by default None
     """
     try:
         title = (
@@ -162,13 +199,16 @@ def visualize_data(
         print(f"Error in visualization: {e}")
 
 
-def main(dataset_type: str = "synthetic", save_path: str = None):
+def main(dataset_type: str = "synthetic", save_path: str = None) -> None:
     """
     Main function to execute correlation analysis.
 
-    Args:
-        dataset_type: Type of dataset ("synthetic" or "iris")
-        save_path: Path to save the plot (optional)
+    Parameters
+    ----------
+    dataset_type : str, optional
+        Type of dataset ("synthetic" or "iris"), by default "synthetic"
+    save_path : str, optional
+        Path to save the plot, by default None
     """
     try:
         X, y = load_dataset(dataset_type=dataset_type)
